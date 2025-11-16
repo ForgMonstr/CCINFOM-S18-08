@@ -1,4 +1,4 @@
-package data_classes.branch;
+package models.branch;
 
 public class BranchyManager {
 }

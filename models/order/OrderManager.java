@@ -1,4 +1,4 @@
-package data_classes.order;
+package models.order;
 
 public class OrderManager {
 }

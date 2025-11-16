@@ -1,4 +1,4 @@
-package data_classes;
+package models;
 
 public class Supplier {
 }
