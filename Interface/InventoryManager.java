@@ -1,4 +1,4 @@
-package models.inventory;
+package Interface;
 
 public class InventoryManager {
 }

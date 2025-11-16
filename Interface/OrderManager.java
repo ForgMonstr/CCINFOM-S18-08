@@ -1,4 +1,4 @@
-package models.order;
+package Interface;
 
 public class OrderManager {
 }

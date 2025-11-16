@@ -1,4 +1,4 @@
-package models;
+package models.order;
 
 public class Supplier {
 }
