@@ -1,6 +1,6 @@
 package models.inventory;
 
-public class Supply {
+public class Supplies {
     private int supplyId;
     private int itemId;
     private int branchId;
@@ -9,11 +9,11 @@ public class Supply {
     private double reorderLevel;
 
     // Default constructor
-    public Supply() {
+    public Supplies() {
     }
 
     // Parameterized constructor
-    public Supply(int supplyId, int itemId, int branchId, double quantityOnHand,
+    public Supplies(int supplyId, int itemId, int branchId, double quantityOnHand,
                   String unitOfMeasure, double reorderLevel) {
         this.supplyId = supplyId;
         this.itemId = itemId;
