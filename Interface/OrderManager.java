@@ -1,4 +1,4 @@
-package data_classes.order;
+package Interface;
 
 public class OrderManager {
 }
