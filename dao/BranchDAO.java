@@ -2,16 +2,16 @@ package dao;
 
 import DBConnection.DBConnector;
 import models.branch.Branch;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BranchDAO {
 
     public void insertBranch(Branch b) {
         String sql = "INSERT INTO branch (branch_code, branch_name, address) VALUES (?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, b.getBranchCode());
@@ -24,7 +24,7 @@ public class BranchDAO {
 
     public Branch getBranchById(int id) {
         String sql = "SELECT * FROM branch WHERE branch_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -47,7 +47,7 @@ public class BranchDAO {
         List<Branch> list = new ArrayList<>();
         String sql = "SELECT * FROM branch";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnector.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -66,7 +66,7 @@ public class BranchDAO {
 
     public void updateBranch(Branch b) {
         String sql = "UPDATE branch SET branch_code=?, branch_name=?, address=? WHERE branch_id=?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, b.getBranchCode());
@@ -80,7 +80,7 @@ public class BranchDAO {
 
     public void deleteBranch(int id) {
         String sql = "DELETE FROM branch WHERE branch_id=?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);

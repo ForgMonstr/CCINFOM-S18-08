@@ -1,5 +1,10 @@
 package managers;
 
+import dao.BranchDAO;
+import models.branch.Branch;
+
+import java.util.List;
+
 public class BranchManager {
     private final BranchDAO branchDAO;
 
