@@ -1,4 +1,4 @@
-package Interface;
+package managers;
 
 public class InventoryManager {
 }
