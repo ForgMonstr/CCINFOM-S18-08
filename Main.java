@@ -11,7 +11,6 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException {
-        // Program logic here
         Properties prop = new Properties();
         prop.load(new FileInputStream("dev.properties"));
 
