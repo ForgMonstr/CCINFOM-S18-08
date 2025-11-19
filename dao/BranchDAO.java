@@ -3,6 +3,7 @@ package dao;
 import DBConnection.DBConnector;
 import models.branch.Branch;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,9 @@ public class BranchDAO {
             stmt.setString(3, b.getAddress());
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Branch getBranchById(int id) {
@@ -39,7 +42,9 @@ public class BranchDAO {
                 );
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

@@ -1,5 +1,10 @@
 package managers;
 
+import dao.CustomerOrderDAO;
+import models.order.CustomerOrder;
+
+import java.util.List;
+
 public class CustomerOrderManager {
     private final CustomerOrderDAO orderDAO;
 
