@@ -63,9 +63,9 @@ public class Forecasting {
                 while(rs.next()){
                         
                     records.add(new DemandRecord(
-                        rs.getDate("order_date").toLocalDate(),
                         rs.getString("product_id"),
                         rs.getInt("qty"),
+                        rs.getDate("order_date").toLocalDate(),
                         rs.getDouble("subtotal")
                     ));
                 }
@@ -93,9 +93,9 @@ public class Forecasting {
 
                 while (rs.next()) {
                     list.add(new DemandRecord(
-                        rs.getDate("order_date").toLocalDate(),
                         rs.getString("product_id"),
-                        rs.getInt("qty")
+                        rs.getInt("qty"),
+                        rs.getDate("order_date").toLocalDate(),
                         0.0
                 ));
                 }
