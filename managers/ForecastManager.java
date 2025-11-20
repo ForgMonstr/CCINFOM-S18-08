@@ -1,11 +1,9 @@
 package managers;
 
-import java.time.LocalDate;
-
 import java.sql.*;
 import java.util.*;
 
-public class Forecasting {
+public class ForecastManager {
 
     public Map<Integer, Double> computeIngredientUsageLast30Days(Connection conn) throws SQLException {
 
