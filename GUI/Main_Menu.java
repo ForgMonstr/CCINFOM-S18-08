@@ -1,18 +1,7 @@
 package GUI;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.LayoutManager;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.*;
-import java.awt.BorderLayout;
-
+import java.awt.*;
 public class Main_Menu extends JFrame {
     Main_Menu() {
         this.setTitle("Infom");
@@ -126,12 +115,18 @@ public class Main_Menu extends JFrame {
         records.setBackground(Color.LIGHT_GRAY);
         records.setBounds(0, 380, 800, 80);
 
+        showRecords.addActionListener(e -> {
+            Records_Page rp = new Records_Page();
+            rp.setVisible(true);
+        });
+
 
         JPanel recordsWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         recordsWrapper.setOpaque(false);
         recordsWrapper.add(showRecords);
         records.add(recordsWrapper, BorderLayout.CENTER);
         this.add(records);
+
 
         JPanel transactions = new JPanel();
         JButton showTransactions = new JButton("Show Transactions");
@@ -145,11 +140,17 @@ public class Main_Menu extends JFrame {
         transactions.setBackground(new Color(38, 38, 38));
         transactions.setBounds(0, 460, 800, 80);
 
+        showTransactions.addActionListener(e -> {
+            Transactions_Page tp = new Transactions_Page();
+            tp.setVisible(true);
+        });
+
         JPanel transactionsWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         transactionsWrapper.setOpaque(false);
         transactionsWrapper.add(showTransactions);
         transactions.add(transactionsWrapper, BorderLayout.CENTER);
         this.add(transactions);
+
 
 
         JPanel end = new JPanel();
