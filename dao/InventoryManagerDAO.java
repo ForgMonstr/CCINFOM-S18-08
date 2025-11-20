@@ -1,12 +1,14 @@
 package dao;
 
 import DBConnection.DBConnector;
+import models.inventory.Inventory;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryManager {
+public class InventoryManagerDAO {
 
     public void insertItem(Inventory i) {
         String sql = "INSERT INTO inventory (item_code, item_name, unit_of_measure, quantity_on_hand, reorder_level, supplier_id, expiration_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -24,7 +26,9 @@ public class InventoryManager {
 
             st.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Inventory getItemById(int id) {
@@ -49,7 +53,9 @@ public class InventoryManager {
                 );
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -74,7 +80,9 @@ public class InventoryManager {
                 ));
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return list;
     }
 
@@ -95,7 +103,9 @@ public class InventoryManager {
 
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteItem(int id) {
@@ -107,6 +117,8 @@ public class InventoryManager {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
