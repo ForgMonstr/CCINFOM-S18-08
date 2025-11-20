@@ -1,4 +1,5 @@
-package data_classes.inventory;
+package managers;
 
 public class InventoryManager {
+    
 }
