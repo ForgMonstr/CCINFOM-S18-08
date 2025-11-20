@@ -33,7 +33,6 @@ public class Forecasting {
     }
 
     public static class DemandRecord{
-        public final LocalDate date;
         public final String productId;
         public final int qty;
 
@@ -51,25 +50,11 @@ public class Forecasting {
     }
 
     public static class TrendResult {
-        public final String productId;
-        public final int totalSalesQty;
-        public final int totalDemandQty;
-        public final double totalRevenue;
+        public final double correlation;
 
-        public TrendResult(String productId, int totalSalesQty, int totalDemandQty, double totalRevenue) {
-            this.productId = productId;
-            this.totalSalesQty = totalSalesQty;
-            this.totalDemandQty = totalDemandQty;
-            this.totalRevenue = totalRevenue;
+        public TrendResult(double correlation){
+            this.correlation = correlation;
         }
-
-        public String toString() {
-            return "TrendResult{" +
-                    "productId='" + productId + '\'' +
-                    ", totalSalesQty=" + totalSalesQty +
-                    ", totalDemandQty=" + totalDemandQty +
-                    ", totalRevenue=" + totalRevenue +
-                    '}';
         }
     }
 
@@ -126,7 +111,7 @@ public class Forecasting {
         }
 
         double correlation = pearsonCorrelation(salesSer, demandSer);
-        return new TrendResult(correlation);
+        return new TrendResult(c);
     }
 
     public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
