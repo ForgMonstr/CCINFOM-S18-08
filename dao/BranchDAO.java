@@ -65,7 +65,9 @@ public class BranchDAO {
                 ));
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return list;
     }
 
@@ -80,7 +82,7 @@ public class BranchDAO {
             stmt.setInt(4, b.getBranchId());
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 
     public void deleteBranch(int id) {
@@ -91,6 +93,6 @@ public class BranchDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 }
