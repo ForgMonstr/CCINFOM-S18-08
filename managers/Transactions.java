@@ -57,10 +57,10 @@ public class Transactions {
 
     //3. BRANCH PERFORMANCE COMPARISON
     public static class OrderItem {
-        public final int productId;
+        public final String productId;
         public final int quantity;
         
-        public OrderItem(int productId, int quantity) {
+        public OrderItem(String productId, int quantity) {
             this.productId = productId;
             this.quantity = quantity;
         }
