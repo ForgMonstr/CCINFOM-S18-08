@@ -1,4 +1,4 @@
-package manager;
+package managers;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -107,7 +107,7 @@ public class Forecasting {
     }
 
     public TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
-        if(salesSer = null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
+        if(salesSer == null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
             throw new IllegalArgumentException("Invalid Series.");
         }
 
@@ -117,7 +117,7 @@ public class Forecasting {
 
     public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
         if (series == null || series.size() < windowSize){
-            throw  new IllegalArgumentException("Invalid Series.")
+            throw  new IllegalArgumentException("Invalid Series.");
         }
 
         List<Double> forecast = new ArrayList<>();
@@ -159,11 +159,10 @@ public class Forecasting {
 
         double nume = n * sumXY - sumX *  sumY;
         double deno = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
-
         if(deno == 0){
             return 0.0;
         } else{
-            return nume/demo;
+            return nume/deno;
         }
 
     }
