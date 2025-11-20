@@ -20,7 +20,9 @@ public class CustomerOrderDAO {
             stmt.setDouble(3, o.getTotalAmount());
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public CustomerOrder getOrderById(int id) {
@@ -40,7 +42,9 @@ public class CustomerOrderDAO {
                 );
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -61,7 +65,9 @@ public class CustomerOrderDAO {
                 ));
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return list;
     }
 
@@ -87,7 +93,7 @@ public class CustomerOrderDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 }
 
