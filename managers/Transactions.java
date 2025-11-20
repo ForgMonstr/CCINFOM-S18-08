@@ -55,18 +55,6 @@ public class Transactions {
         }
     }
 
-    public static class InventoryUtilizationRecord {
-        public final String itemId;
-        public final double totalQuantityUsed;
-        public final long productSalesCount;
-
-        public InventoryUtilizationRecord(String itemId, double totalQuantityUsed, long productSalesCount) {
-            this.itemId = itemId;
-            this.totalQuantityUsed = totalQuantityUsed;
-            this.productSalesCount = productSalesCount;
-        }
-    }
-
     //3. BRANCH PERFORMANCE COMPARISON
     public static class OrderItem {
         public final int productId;
