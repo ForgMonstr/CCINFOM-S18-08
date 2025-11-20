@@ -22,6 +22,7 @@ public class Main_Menu extends JFrame {
         ImageIcon icon2 = new ImageIcon("UGANDAN.jpg");
         this.setIconImage(icon2.getImage());
 
+
         JPanel header = new JPanel();
         header.setLayout((LayoutManager)null);
         header.setBounds(0, 0, 800, 60);
@@ -34,6 +35,7 @@ public class Main_Menu extends JFrame {
         headerLabel.setOpaque(false);
         headerLabel.setBounds(0, 10, 800, 60);
         header.add(headerLabel);
+
 
         this.add(header);
         JPanel ingredients = new JPanel();
@@ -48,11 +50,13 @@ public class Main_Menu extends JFrame {
         ingredients.setBounds(0, 60, 800, 80);
         ingredients.setBackground(Color.LIGHT_GRAY);
 
+
         JPanel ingWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ingWrapper.setOpaque(false);
         ingWrapper.add(showIng);
         ingredients.add(ingWrapper, BorderLayout.CENTER);
         this.add(ingredients);
+
 
         JPanel items = new JPanel();
         JButton showItems = new JButton("Show Items");
@@ -113,7 +117,7 @@ public class Main_Menu extends JFrame {
         JPanel records = new JPanel();
         JButton showRecords = new JButton("Show Records");
         showRecords.setFont(new Font("Arial", 1, 12));
-        showRecords.setForeground(new Color(38, 38, 38));
+        showRecords.setForeground(new Color(38,38,38));
         showRecords.setBackground(Color.black);
         showRecords.setOpaque(false);
         showRecords.setPreferredSize(new Dimension(150, 20));
@@ -128,6 +132,24 @@ public class Main_Menu extends JFrame {
         recordsWrapper.add(showRecords);
         records.add(recordsWrapper, BorderLayout.CENTER);
         this.add(records);
+
+        JPanel transactions = new JPanel();
+        JButton showTransactions = new JButton("Show Transactions");
+        showTransactions.setFont(new Font("Arial", 1, 12));
+        showTransactions.setForeground(new Color(200,200,200));
+        showTransactions.setBackground(Color.black);
+        showTransactions.setOpaque(false);
+        showTransactions.setPreferredSize(new Dimension(150, 20));
+        showTransactions.setHorizontalAlignment(0);
+        transactions.setLayout(new BorderLayout());
+        transactions.setBackground(new Color(38, 38, 38));
+        transactions.setBounds(0, 460, 800, 80);
+
+        JPanel transactionsWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        transactionsWrapper.setOpaque(false);
+        transactionsWrapper.add(showTransactions);
+        transactions.add(transactionsWrapper, BorderLayout.CENTER);
+        this.add(transactions);
 
 
         JPanel end = new JPanel();
