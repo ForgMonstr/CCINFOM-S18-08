@@ -1,7 +1,6 @@
 package dao;
 
 import DBConnection.DBConnector;
-import models.inventory.Inventory;
 
 import java.sql.*;
 import java.util.ArrayList;
