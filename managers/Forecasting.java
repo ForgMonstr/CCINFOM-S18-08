@@ -37,12 +37,16 @@ public class Forecasting {
             }
     }
 
-    public List<DemandRecord> getDemands(){
+    public List<DemandRecord> getDemands(LocalDate startDate, LocalDate endDate) throws SQLException{
         String sql = "SELECT date, product_id, qty FROM sales ORDER BY date";
 
         try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = c.prepareStatement(sql));
+
+             ps.setDate(1, Date.valueOf(startDate));
+             ps.setDate(2, Date.valueOf(endDate));
+
+             try (ResultSet rs = ps.executeQuery()) {
 
             List<DemandRecord> list = new ArrayList<>();
 
@@ -58,7 +62,65 @@ public class Forecasting {
         }
     }
 
-    public List<Double> forecastAve(){
+    public TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
+        if(salesSer = null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
+            throw new IllegalArgumentException("Invalid Series.");
+        }
+
+        double correlation = pearsonCorrelation(salesSer, demandSer);
+        return new TrendResult(correlation);
+    }
+
+    public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
+        if (series == null || series.size() < windowSize){
+            throw  new IllegalArgumentException("Invalid Series.")
+        }
+
+        List<Double> forecast = new ArrayList<>();
+        List<Double> working = new ArrayList<>(series);
+
+        for(int p=0; p < periods; p++){
+            int start = working.size() - windowSize;
+            double sum = 0.0;
+
+            for(int i=start; i < working.size(); i++){
+                    sum =  sum + working.get(i);
+            }
+
+            double avg = sum/windowSize;
+            forecast.add(avg);
+            working.add(avg);
+        }
+        return forecast;
+    }
+
+    private double pearsonCorrelation(List<Double> x, List<Double> y){
+        int n = x.size();
+        double sumX =  0.0;
+        double sumY = 0.0;
+        double sumXY = 0.0;
+        double sumX2 = 0.0;
+        double sumY2 = 0.0;
+
+        for(int i=0; i < n; i++){
+            double xi = x.get(i);
+            double yi = y.get(i);
+
+            sumX = sumX + xi;
+            sumY = sumY + yi;
+            sumXY = sumXY + xi * yi;
+            sumX2 = sumX2 + xi * xi;
+            sumY2 = sumY2 + yi * yi;
+        }
+
+        double nume = n * sumXY - sumX *  sumY;
+        double deno = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+
+        if(deno == 0){
+            return 0.0;
+        } else{
+            return nume/demo;
+        }
 
     }
 
