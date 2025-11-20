@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import LocalDate;
 
 public class Forecasting {
     private final DataSource dataSource;
@@ -12,39 +13,25 @@ public class Forecasting {
         this.dataSource = dataSource;
     }
 
-    public static class SalesRecord{
+    public static class DemandRecord{
+        public final LocalDate date;
         public final String productId;
         public final int qty;
         public final double revenue;
 
-        public SalesRecord(String productId, int qty, double revenue) {
+        public DemandRecord(String productId, int qty, LocalDate date, double revenue) {
             this.productId = productId;
             this.qty = qty;
+            this.date = date;
             this.revenue = revenue;
         }
 
         public String toString() {
-            return "SalesRecord{" +
+            return "DemandRecord{" +
+                    "date=" + date +
                     ", productId='" + productId + '\'' +
                     ", qty=" + qty +
                     ", revenue=" + revenue +
-                    '}';
-        }    
-    }
-
-    public static class DemandRecord{
-        public final String productId;
-        public final int qty;
-
-        public DemandRecord(String productId, int qty) {
-            this.productId = productId;
-            this.qty = qty;
-        }
-
-        public String toString() {
-            return "DemandRecord{" +
-                    ", productId='" + productId + '\'' +
-                    ", qty=" + qty +
                     '}';
         }
     }
@@ -55,51 +42,65 @@ public class Forecasting {
         public TrendResult(double correlation){
             this.correlation = correlation;
         }
-        }
+
     }
 
-    public List<SalesRecord> getSalesForecast(){
-        String sql = "SELECT date, product_id, qty, revenue FROM sales WHERE date BETWEEN ? and ? ORDER BY date";
+    public List<DemandRecord> getRecords(java.sql.Date startDate, java.sql.Date endDate){
+        String sql = "SELECT co.order_date, od.product_id, od.qty, od.subtotal " +
+                     "FROM customerorder co JOIN orderdetails od ON co.order_id = od.order_id " +
+                     "WHERE co.order_date BETWEEN ? AND ? " +
+                     "ORDER BY co.order_date, od.product_id";
+
         try (Connection c =  dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)){
+            PreparedStatement ps = c.prepareStatement(sql)){
+
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
 
             try (ResultSet rs = ps.executeQuery()){
 
-                List<SalesRecord> salesRecords = new ArrayList<>();
+                List<DemandRecord> records = new ArrayList<>();
                 while(rs.next()){
                         
-                    salesRecords.add(new SalesRecord(
-                        rs.getDate("date").toLocalDate(),
+                    records.add(new DemandRecord(
+                        rs.getDate("order_date").toLocalDate(),
                         rs.getString("product_id"),
                         rs.getInt("qty"),
-                        rs.getDouble("revenue")
+                        rs.getDouble("subtotal")
                     ));
                 }
-                return salesRecords;
+                return records;
             }
         } catch (SQLException e){
-            throw new RuntimeException("Error fetching sales forecast", e);
+            throw new RuntimeException("Error fetching records", e);
         }
     }
 
-    public List<DemandRecord> getDemands(){
-        String sql = "SELECT date, product_id, qty FROM sales ORDER BY date";
+    public List<DemandRecord> getDemands(java.sql.Date startDate, java.sql.Date endDate){
+        String sql = "SELECT co.order_date, od.product_id, od.qty " +
+                     "FROM customerorder co JOIN orderdetails od ON co.order_id = od.order_id " +
+                     "WHERE co.order_date BETWEEN ? AND ? " +
+                     "ORDER BY co.order_date, od.product_id";
 
         try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()){
+             PreparedStatement ps = c.prepareStatement(sql)){
+                ps.setDate(1, startDate);
+                ps.setDate(2, endDate);
 
-            List<DemandRecord> list = new ArrayList<>();
+             try(ResultSet rs = ps.executeQuery()){
 
-            while (rs.next()) {
-                list.add(new DemandRecord(
-                    rs.getDate("date").toLocalDate(),
-                    rs.getString("product_id"),
-                    rs.getInt("qty")
+                List<DemandRecord> list = new ArrayList<>();
+
+                while (rs.next()) {
+                    list.add(new DemandRecord(
+                        rs.getDate("order_date").toLocalDate(),
+                        rs.getString("product_id"),
+                        rs.getInt("qty")
+                        0.0
                 ));
+                }
+                return list;
             }
-
-            return list;
         } catch (SQLException e) {
             throw new RuntimeException("Error fetching demands", e);
         }
@@ -111,7 +112,7 @@ public class Forecasting {
         }
 
         double correlation = pearsonCorrelation(salesSer, demandSer);
-        return new TrendResult(c);
+        return new TrendResult(correlation);
     }
 
     public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
