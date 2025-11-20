@@ -1,4 +1,4 @@
-package managers;
+package dao;
 
 import javax.sql.DataSource;
 import java.sql.*;

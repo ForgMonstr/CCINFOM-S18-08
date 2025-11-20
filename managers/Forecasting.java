@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Forecasting {
    private final ForecastingDAO forecastingDAO;
 
-    public Forecasting() {
+   public Forecasting() {
         this.forecastingDAO = new ForecastingDAO();
    }
 
