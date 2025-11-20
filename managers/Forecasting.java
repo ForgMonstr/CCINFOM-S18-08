@@ -167,4 +167,48 @@ public class Forecasting {
 
     }
 
+    //forecast accuracy
+
+    public List<ForecastAccuracy> generateForecastAccuracyReport(
+            List<DemandRecord> actuals,
+            Map<String, Map<YearMonth, Double>> forecasts, // branchId -> month -> predicted demand
+            Map<String, String> productToBranch // productId -> branchId
+    ){
+        List<ForecastAccuracy> report = new ArrayList<>();
+
+        // Group actual demand by branch and month
+        Map<String, Map<YearMonth, Integer>> actualsByBranchMonth = new HashMap<>();
+
+        for(DemandRecord r : actuals){
+            String branchId = productToBranch.get(r.productId); // map product to branch
+            if(branchId == null) continue;
+
+            YearMonth month = YearMonth.from(r.date);
+            actualsByBranchMonth.computeIfAbsent(branchId, k -> new HashMap<>());
+            Map<YearMonth, Integer> monthMap = actualsByBranchMonth.get(branchId);
+            monthMap.put(month, monthMap.getOrDefault(month, 0) + r.qty);
+        }
+
+        // Compare actual vs forecast
+        for(String branchId : actualsByBranchMonth.keySet()){
+            Map<YearMonth, Integer> monthMap = actualsByBranchMonth.get(branchId);
+            Map<YearMonth, Double> forecastMap = forecasts.getOrDefault(branchId, Map.of());
+
+            for(YearMonth month : monthMap.keySet()){
+                int actualQty = monthMap.get(month);
+                double predictedQty = forecastMap.getOrDefault(month, 0.0);
+
+                report.add(new ForecastAccuracy(branchId, month, actualQty, predictedQty));
+            }
+        }
+
+        // Sort by branch and month
+        report.sort((a, b) -> {
+            int cmp = a.branchId.compareTo(b.branchId);
+            return cmp != 0 ? cmp : a.month.compareTo(b.month);
+        });
+
+        return report;
+    }
+
 }
