@@ -1,4 +1,4 @@
-package manager;
+package managers;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -56,7 +56,7 @@ public class Transactions {
     }
 
     //3. BRANCH PERFORMANCE COMPARISON
-    public static class OrderItem {
+    public static class OrderItem{
         public final String productId;
         public final int quantity;
         
@@ -235,7 +235,7 @@ public class Transactions {
     }
 
     //3. BRANCH PERFORMANCE COMPARISON
-    public OrderResult processBranchSale(int branchId, int customerId, int salesRepId, List<OrderItem> items){
+    public OrderResult processBranchSale(int branchId, int customerId, int salesRepId, List<OrderItem> items) throws SQLException {
         Connection connection = null;
         double overallTotal = 0.0;
         int orderId = -1;
@@ -336,8 +336,16 @@ public class Transactions {
             throw new SQLException("Branch Sale transaction failed: " + e.getMessage(), e);
         } finally {
             if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
+                try {
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                    System.err.println("Failed to reset autoCommit: " + ignored.getMessage());
+                }
+                try {
+                    connection.close();
+                } catch (SQLException ignored) {
+                    System.err.println("Failed to close connection: " + ignored.getMessage());
+                }
             }
         }
     }
@@ -360,7 +368,7 @@ public class Transactions {
         return topProducts;
     }
 
-    public List<InventoryUtilizationRecord> updateInventoryUtilization(java.sql.Date startDate, java.sql.Date endDate) {
+    public List<InventoryUtilizationRecord> updateInventoryUtilization(java.sql.Date startDate, java.sql.Date endDate) throws SQLException {
         String sql = "SELECT " +
                      "inv.item_id, " +
                      "SUM(od.qty * pi.quantity_used) AS total_consumption, " +
@@ -374,35 +382,28 @@ public class Transactions {
                      "ORDER BY total_consumption DESC";
 
         List<InventoryUtilizationRecord> utilizationRecords = new ArrayList<>();
-        Connection connection = null;
 
-        try {
-            connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setDate(1, startDate);
-                ps.setDate(2, endDate);
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        String itemId = rs.getString("item_id");
-                        double consumption = rs.getDouble("total_consumption");
-                        long frequency = rs.getLong("sales_frequency");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String itemId = rs.getString("item_id");
+                    double consumption = rs.getDouble("total_consumption");
+                    long frequency = rs.getLong("sales_frequency");
 
-                        utilizationRecords.add(new InventoryUtilizationRecord(
-                            itemId, 
-                            consumption, 
-                            frequency
-                        ));
-                        
-                        updateInventoryStock(connection, itemId, consumption);
-                    }
+                    utilizationRecords.add(new InventoryUtilizationRecord(
+                        itemId,
+                        consumption,
+                        frequency
+                    ));
+
+                    updateInventoryStock(connection, itemId, consumption);
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error calculating inventory utilization: " + e.getMessage(), e);
-        } finally {
-            if (connection != null) connection.close();
         }
         return utilizationRecords;
     }
