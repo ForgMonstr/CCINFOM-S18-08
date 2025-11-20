@@ -120,7 +120,7 @@ public class Forecasting {
 
     public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
         if (series == null || series.size() < windowSize){
-            throw  new IllegalArgumentException("Invalid Series.")
+            throw  new IllegalArgumentException("Invalid Series.");
         }
 
         List<Double> forecast = new ArrayList<>();
@@ -166,7 +166,7 @@ public class Forecasting {
         if(deno == 0){
             return 0.0;
         } else{
-            return nume/demo;
+            return nume/deno;
         }
 
     }
