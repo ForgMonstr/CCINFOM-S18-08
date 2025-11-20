@@ -90,16 +90,16 @@ public class Transactions {
 
     //4 . INVENTORY PLANNING SIMULATION
     public static class InventoryUtilizationRecord {
-    public final String itemId;             // ID of the raw material/ingredient from 'inventory'
-    public final double totalQuantityUsed;  // Sum of quantity_used across all sales
-    public final long productSalesCount;    // Count of unique product sales that required this item
+        public final String itemId;
+        public final double totalQuantityUsed;
+        public final long productSalesCount;
 
-    public InventoryUtilizationRecord(String itemId, double totalQuantityUsed, long productSalesCount) {
-        this.itemId = itemId;
-        this.totalQuantityUsed = totalQuantityUsed;
-        this.productSalesCount = productSalesCount;
+        public InventoryUtilizationRecord(String itemId, double totalQuantityUsed, long productSalesCount) {
+            this.itemId = itemId;
+            this.totalQuantityUsed = totalQuantityUsed;
+            this.productSalesCount = productSalesCount;
+        }
     }
-}
 
 // ====================================================================================================================================================== //
 
@@ -247,7 +247,7 @@ public class Transactions {
     }
 
     //3. BRANCH PERFORMANCE COMPARISON
-    public OrderResult processBranchSale(int branchId, int customerId, int salesRepId, List<OrderItem> items) throws SQLException {
+    public OrderResult processBranchSale(int branchId, int customerId, int salesRepId, List<OrderItem> items){
         Connection connection = null;
         double overallTotal = 0.0;
         int orderId = -1;
@@ -354,7 +354,7 @@ public class Transactions {
         }
     }
 
-    //INVENTORY PLANNING SIMULATION
+    //4. INVENTORY PLANNING SIMULATION
     public List<String> recordFrequentProducts(List<SalesFrequencyRecord> frequencyRecords, int topN) {
         if (frequencyRecords == null || frequencyRecords.isEmpty() || topN <= 0) {
             return new ArrayList<>();
@@ -370,6 +370,64 @@ public class Transactions {
             count++;
         }
         return topProducts;
+    }
+
+    public List<InventoryUtilizationRecord> updateInventoryUtilization(java.sql.Date startDate, java.sql.Date endDate) {
+        String sql = "SELECT " +
+                     "inv.item_id, " +
+                     "SUM(od.qty * pi.quantity_used) AS total_consumption, " +
+                     "COUNT(DISTINCT od.order_id) AS sales_frequency " + 
+                     "FROM customerorder co " +
+                     "JOIN orderdetails od ON co.order_id = od.order_id " +
+                     "JOIN productingredients pi ON od.product_id = pi.product_id " +
+                     "JOIN inventory inv ON pi.item_id = inv.item_id " +
+                     "WHERE co.order_date BETWEEN ? AND ? " +
+                     "GROUP BY inv.item_id " +
+                     "ORDER BY total_consumption DESC";
+
+        List<InventoryUtilizationRecord> utilizationRecords = new ArrayList<>();
+        Connection connection = null;
+
+        try {
+            connection = dataSource.getConnection();
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setDate(1, startDate);
+                ps.setDate(2, endDate);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        String itemId = rs.getString("item_id");
+                        double consumption = rs.getDouble("total_consumption");
+                        long frequency = rs.getLong("sales_frequency");
+
+                        utilizationRecords.add(new InventoryUtilizationRecord(
+                            itemId, 
+                            consumption, 
+                            frequency
+                        ));
+                        
+                        updateInventoryStock(connection, itemId, consumption);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error calculating inventory utilization: " + e.getMessage(), e);
+        } finally {
+            if (connection != null) connection.close();
+        }
+        return utilizationRecords;
+    }
+
+    private void updateInventoryStock(Connection conn, String itemId, double consumption) throws SQLException {
+
+        String updateSql = "UPDATE inventory SET quantity_on_hand = quantity_on_hand - ? WHERE item_id = ?";
+        
+        try (PreparedStatement psUpdate = conn.prepareStatement(updateSql)) {
+            psUpdate.setDouble(1, consumption);
+            psUpdate.setString(2, itemId);
+            psUpdate.executeUpdate();
+        }
     }
 
 
