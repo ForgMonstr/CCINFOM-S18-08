@@ -2,9 +2,12 @@ package managers;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.Map;
 
 public class Forecasting {
     private final DataSource dataSource;
