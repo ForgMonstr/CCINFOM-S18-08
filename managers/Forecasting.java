@@ -1,4 +1,4 @@
-package manager;
+package managers;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -107,7 +107,7 @@ public class Forecasting {
     }
 
     public TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
-        if(salesSer = null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
+        if(salesSer == null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
             throw new IllegalArgumentException("Invalid Series.");
         }
 
