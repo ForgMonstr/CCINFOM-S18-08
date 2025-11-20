@@ -1,14 +1,10 @@
-package managers;
-
+package manager;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
 
 public class Forecasting {
     private final DataSource dataSource;
@@ -17,19 +13,22 @@ public class Forecasting {
         this.dataSource = dataSource;
     }
 
-    public static class SalesRecord{
+    public static class DemandRecord{
+        public final LocalDate date;
         public final String productId;
         public final int qty;
         public final double revenue;
 
-        public SalesRecord(String productId, int qty, double revenue) {
+        public DemandRecord(String productId, int qty, LocalDate date, double revenue) {
             this.productId = productId;
             this.qty = qty;
+            this.date = date;
             this.revenue = revenue;
         }
 
         public String toString() {
-            return "SalesRecord{" +
+            return "DemandRecord{" +
+                    "date=" + date +
                     ", productId='" + productId + '\'' +
                     ", qty=" + qty +
                     ", revenue=" + revenue +
@@ -37,106 +36,88 @@ public class Forecasting {
         }
     }
 
-    public static class DemandRecord{
-        public final LocalDate date;
-        public final String productId;
-        public final int qty;
-
-        public DemandRecord(String productId, int qty) {
-            this.productId = productId;
-            this.qty = qty;
-        }
-
-        public String toString() {
-            return "DemandRecord{" +
-                    ", productId='" + productId + '\'' +
-                    ", qty=" + qty +
-                    '}';
-        }
-    }
-
     public static class TrendResult {
-        public final String productId;
-        public final int totalSalesQty;
-        public final int totalDemandQty;
-        public final double totalRevenue;
+        public final double correlation;
 
-        public TrendResult(String productId, int totalSalesQty, int totalDemandQty, double totalRevenue) {
-            this.productId = productId;
-            this.totalSalesQty = totalSalesQty;
-            this.totalDemandQty = totalDemandQty;
-            this.totalRevenue = totalRevenue;
+        public TrendResult(double correlation){
+            this.correlation = correlation;
         }
 
-        public String toString() {
-            return "TrendResult{" +
-                    "productId='" + productId + '\'' +
-                    ", totalSalesQty=" + totalSalesQty +
-                    ", totalDemandQty=" + totalDemandQty +
-                    ", totalRevenue=" + totalRevenue +
-                    '}';
-        }
     }
 
-    public List<dao.Forecasting.SalesRecord> getSalesForecast(){
-        String sql = "SELECT date, product_id, qty, revenue FROM sales WHERE date BETWEEN ? and ? ORDER BY date";
+    public List<DemandRecord> getRecords(java.sql.Date startDate, java.sql.Date endDate){
+        String sql = "SELECT co.order_date, od.product_id, od.qty, od.subtotal " +
+                     "FROM customerorder co JOIN orderdetails od ON co.order_id = od.order_id " +
+                     "WHERE co.order_date BETWEEN ? AND ? " +
+                     "ORDER BY co.order_date, od.product_id";
+
         try (Connection c =  dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)){
+            PreparedStatement ps = c.prepareStatement(sql)){
+
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
 
             try (ResultSet rs = ps.executeQuery()){
 
-                List<dao.Forecasting.SalesRecord> salesRecords = new ArrayList<>();
+                List<DemandRecord> records = new ArrayList<>();
                 while(rs.next()){
-
-                    salesRecords.add(new dao.Forecasting.SalesRecord(
-                            rs.getDate("date").toLocalDate(),
-                            rs.getString("product_id"),
-                            rs.getInt("qty"),
-                            rs.getDouble("revenue")
+                        
+                    records.add(new DemandRecord(
+                        rs.getString("product_id"),
+                        rs.getInt("qty"),
+                        rs.getDate("order_date").toLocalDate(),
+                        rs.getDouble("subtotal")
                     ));
                 }
-                return salesRecords;
+                return records;
             }
         } catch (SQLException e){
-            throw new RuntimeException("Error fetching sales forecast", e);
+            throw new RuntimeException("Error fetching records", e);
         }
     }
 
-    public List<dao.Forecasting.DemandRecord> getDemands(){
-        String sql = "SELECT date, product_id, qty FROM sales ORDER BY date";
+    public List<DemandRecord> getDemands(java.sql.Date startDate, java.sql.Date endDate){
+        String sql = "SELECT co.order_date, od.product_id, od.qty " +
+                     "FROM customerorder co JOIN orderdetails od ON co.order_id = od.order_id " +
+                     "WHERE co.order_date BETWEEN ? AND ? " +
+                     "ORDER BY co.order_date, od.product_id";
 
         try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()){
+             PreparedStatement ps = c.prepareStatement(sql)){
+                ps.setDate(1, startDate);
+                ps.setDate(2, endDate);
 
-            List<dao.Forecasting.DemandRecord> list = new ArrayList<>();
+             try(ResultSet rs = ps.executeQuery()){
 
-            while (rs.next()) {
-                list.add(new dao.Forecasting.DemandRecord(
-                        rs.getDate("date").toLocalDate(),
+                List<DemandRecord> list = new ArrayList<>();
+
+                while (rs.next()) {
+                    list.add(new DemandRecord(
                         rs.getString("product_id"),
-                        rs.getInt("qty")
+                        rs.getInt("qty"),
+                        rs.getDate("order_date").toLocalDate(),
+                        0.0
                 ));
+                }
+                return list;
             }
-
-            return list;
         } catch (SQLException e) {
             throw new RuntimeException("Error fetching demands", e);
         }
     }
 
-    public dao.Forecasting.TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
+    public TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
         if(salesSer = null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
             throw new IllegalArgumentException("Invalid Series.");
         }
 
         double correlation = pearsonCorrelation(salesSer, demandSer);
-        return new dao.Forecasting.TrendResult(correlation);
+        return new TrendResult(correlation);
     }
 
     public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
         if (series == null || series.size() < windowSize){
-            throw  new IllegalArgumentException("Invalid Series.");
+            throw  new IllegalArgumentException("Invalid Series.")
         }
 
         List<Double> forecast = new ArrayList<>();
@@ -147,7 +128,7 @@ public class Forecasting {
             double sum = 0.0;
 
             for(int i=start; i < working.size(); i++){
-                sum =  sum + working.get(i);
+                    sum =  sum + working.get(i);
             }
 
             double avg = sum/windowSize;
@@ -187,7 +168,4 @@ public class Forecasting {
 
     }
 
-
-
-}
 }
