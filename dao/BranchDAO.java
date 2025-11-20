@@ -82,9 +82,7 @@ public class BranchDAO {
             stmt.setInt(4, b.getBranchId());
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 
     public void deleteBranch(int id) {
@@ -95,8 +93,6 @@ public class BranchDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 }
