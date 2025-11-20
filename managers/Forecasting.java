@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import LocalDate;
+import java.time.LocalDate;
 
 public class Forecasting {
     private final DataSource dataSource;
