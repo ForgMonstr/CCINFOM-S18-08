@@ -3,6 +3,7 @@ package dao;
 import DBConnection.DBConnector;
 import models.order.CustomerOrder;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,7 @@ public class CustomerOrderDAO {
             stmt.setInt(4, o.getOrderId());
             stmt.executeUpdate();
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException | IOException e) { e.printStackTrace(); }
     }
 
     public void deleteOrder(int id) {

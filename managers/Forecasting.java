@@ -1,193 +1,115 @@
 package managers;
 
+import java.time.LocalDate;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.sql.*;
+import java.util.*;
 
 public class Forecasting {
-    private final DataSource dataSource;
 
-    public Forecasting(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    public Map<Integer, Double> computeIngredientUsageLast30Days(Connection conn) throws SQLException {
 
-    public static class SalesRecord{
-        public final String productId;
-        public final int qty;
-        public final double revenue;
+        Map<Integer, Integer> productSales = new HashMap<>();
+        Map<Integer, Double> ingredientUsage = new HashMap<>();
 
-        public SalesRecord(String productId, int qty, double revenue) {
-            this.productId = productId;
-            this.qty = qty;
-            this.revenue = revenue;
-        }
+        String salesSql = """
+            SELECT od.product_id, SUM(od.quantity) AS qty_sold
+            FROM orderdetails od
+            JOIN customerorder co ON od.order_id = co.order_id
+            WHERE co.order_date >= CURRENT_DATE - INTERVAL 30 DAY
+            GROUP BY od.product_id
+        """;
 
-        public String toString() {
-            return "SalesRecord{" +
-                    ", productId='" + productId + '\'' +
-                    ", qty=" + qty +
-                    ", revenue=" + revenue +
-                    '}';
-        }
-    }
-
-    public static class DemandRecord{
-        public final LocalDate date;
-        public final String productId;
-        public final int qty;
-
-        public DemandRecord(String productId, int qty) {
-            this.productId = productId;
-            this.qty = qty;
-        }
-
-        public String toString() {
-            return "DemandRecord{" +
-                    ", productId='" + productId + '\'' +
-                    ", qty=" + qty +
-                    '}';
-        }
-    }
-
-    public static class TrendResult {
-        public final String productId;
-        public final int totalSalesQty;
-        public final int totalDemandQty;
-        public final double totalRevenue;
-
-        public TrendResult(String productId, int totalSalesQty, int totalDemandQty, double totalRevenue) {
-            this.productId = productId;
-            this.totalSalesQty = totalSalesQty;
-            this.totalDemandQty = totalDemandQty;
-            this.totalRevenue = totalRevenue;
-        }
-
-        public String toString() {
-            return "TrendResult{" +
-                    "productId='" + productId + '\'' +
-                    ", totalSalesQty=" + totalSalesQty +
-                    ", totalDemandQty=" + totalDemandQty +
-                    ", totalRevenue=" + totalRevenue +
-                    '}';
-        }
-    }
-
-    public List<dao.Forecasting.SalesRecord> getSalesForecast(){
-        String sql = "SELECT date, product_id, qty, revenue FROM sales WHERE date BETWEEN ? and ? ORDER BY date";
-        try (Connection c =  dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)){
-
-            try (ResultSet rs = ps.executeQuery()){
-
-                List<dao.Forecasting.SalesRecord> salesRecords = new ArrayList<>();
-                while(rs.next()){
-
-                    salesRecords.add(new dao.Forecasting.SalesRecord(
-                            rs.getDate("date").toLocalDate(),
-                            rs.getString("product_id"),
-                            rs.getInt("qty"),
-                            rs.getDouble("revenue")
-                    ));
-                }
-                return salesRecords;
-            }
-        } catch (SQLException e){
-            throw new RuntimeException("Error fetching sales forecast", e);
-        }
-    }
-
-    public List<dao.Forecasting.DemandRecord> getDemands(){
-        String sql = "SELECT date, product_id, qty FROM sales ORDER BY date";
-
-        try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()){
-
-            List<dao.Forecasting.DemandRecord> list = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(salesSql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                list.add(new dao.Forecasting.DemandRecord(
-                        rs.getDate("date").toLocalDate(),
-                        rs.getString("product_id"),
-                        rs.getInt("qty")
-                ));
+                productSales.put(rs.getInt("product_id"), rs.getInt("qty_sold"));
             }
-
-            return list;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error fetching demands", e);
         }
+
+        String ingredientSql = """
+            SELECT item_id, quantity_used
+            FROM productingredients
+            WHERE product_id = ?
+        """;
+
+        for (var entry : productSales.entrySet()) {
+            int productId = entry.getKey();
+            int qtySold = entry.getValue();
+
+            try (PreparedStatement ps = conn.prepareStatement(ingredientSql)) {
+                ps.setInt(1, productId);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int itemId = rs.getInt("item_id");
+                        double qtyUsed = rs.getDouble("quantity_used");
+
+                        ingredientUsage.merge(itemId, qtySold * qtyUsed, Double::sum);
+                    }
+                }
+            }
+        }
+
+        return ingredientUsage;
     }
 
-    public dao.Forecasting.TrendResult analyzeTrends(List<Double> salesSer, List<Double> demandSer){
-        if(salesSer = null || demandSer == null ||  salesSer.size() !=  demandSer.size()){
-            throw new IllegalArgumentException("Invalid Series.");
+    public Map<Integer, Double> forecastNext30Days(Map<Integer, Double> usageLast30) {
+        Map<Integer, Double> forecast = new HashMap<>();
+
+        for (var entry : usageLast30.entrySet()) {
+            int itemId = entry.getKey();
+            double last30Usage = entry.getValue();
+
+            double avgDaily = last30Usage / 30.0;
+            double next30 = avgDaily * 30;
+
+            forecast.put(itemId, Math.round(next30 * 100.0) / 100.0);
         }
 
-        double correlation = pearsonCorrelation(salesSer, demandSer);
-        return new dao.Forecasting.TrendResult(correlation);
-    }
-
-    public List<Double> forecastAverage(List<Double> series, int periods, int windowSize){
-        if (series == null || series.size() < windowSize){
-            throw  new IllegalArgumentException("Invalid Series.");
-        }
-
-        List<Double> forecast = new ArrayList<>();
-        List<Double> working = new ArrayList<>(series);
-
-        for(int p=0; p < periods; p++){
-            int start = working.size() - windowSize;
-            double sum = 0.0;
-
-            for(int i=start; i < working.size(); i++){
-                sum =  sum + working.get(i);
-            }
-
-            double avg = sum/windowSize;
-            forecast.add(avg);
-            working.add(avg);
-        }
         return forecast;
     }
 
-    private double pearsonCorrelation(List<Double> x, List<Double> y){
-        int n = x.size();
-        double sumX =  0.0;
-        double sumY = 0.0;
-        double sumXY = 0.0;
-        double sumX2 = 0.0;
-        double sumY2 = 0.0;
+    public Map<Integer, Double> computeReorderNeeds(Connection conn, int branchId, Map<Integer, Double> forecast)
+            throws SQLException {
 
-        for(int i=0; i < n; i++){
-            double xi = x.get(i);
-            double yi = y.get(i);
+        Map<Integer, Double> needs = new HashMap<>();
 
-            sumX = sumX + xi;
-            sumY = sumY + yi;
-            sumXY = sumXY + xi * yi;
-            sumX2 = sumX2 + xi * xi;
-            sumY2 = sumY2 + yi * yi;
+        String sql = """
+            SELECT item_id, quantity_on_hand
+            FROM supplies
+            WHERE branch_id = ?
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, branchId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+
+                    int itemId = rs.getInt("item_id");
+                    double stock = rs.getDouble("quantity_on_hand");
+
+                    double predicted = forecast.getOrDefault(itemId, 0.0);
+
+                    double deficit = predicted - stock;
+
+                    if (deficit > 0) {
+                        needs.put(itemId, Math.round(deficit * 100.0) / 100.0);
+                    }
+                }
+            }
         }
 
-        double nume = n * sumXY - sumX *  sumY;
-        double deno = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
-
-        if(deno == 0){
-            return 0.0;
-        } else{
-            return nume/demo;
-        }
-
+        return needs;
     }
 
+    public Map<Integer, Double> forecastReorderForBranch(Connection conn, int branchId) throws SQLException {
 
+        Map<Integer, Double> last30 = computeIngredientUsageLast30Days(conn);
+        Map<Integer, Double> forecast = forecastNext30Days(last30);
+        return computeReorderNeeds(conn, branchId, forecast);
+    }
+}
 
-}
-}
