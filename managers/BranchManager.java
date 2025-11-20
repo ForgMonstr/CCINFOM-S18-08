@@ -31,7 +31,6 @@ public class BranchManager {
     public void deleteBranch(int branchId) {
         branchDAO.deleteBranch(branchId);
     }
-}
 
 }
 
