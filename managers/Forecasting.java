@@ -1,6 +1,6 @@
 package managers;
 
-import javax.sql.DataSource'
+import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,22 +23,39 @@ public class Forecasting {
                 try(ResultSet rs = ps.executeQuery()){
 
                     List<SalesRecord> salesRecords = new ArrayList<>();
-                    while(rs.next(0)){
+                    while(rs.next()){
                         
-                        list.add(new SalesRecord(
+                        salesRecords.add(new SalesRecord(
                             rs.getDate("date").toLocalDate(),
                             rs.getString("product_id"),
                             rs.getInt("qty"),
                             rs.getDouble("revenue")
                         ));
                     }
-                    return list;
+                    return salesRecords;
                 }
             }
     }
 
     public List<DemandRecord> getDemands(){
+        String sql = "SELECT date, product_id, qty FROM sales ORDER BY date";
 
+        try (Connection c = dataSource.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            List<DemandRecord> list = new ArrayList<>();
+
+            while (rs.next()) {
+                list.add(new DemandRecord(
+                    rs.getDate("date").toLocalDate(),
+                    rs.getString("product_id"),
+                    rs.getInt("qty")
+                ));
+            }
+
+            return list;
+        }
     }
 
     public List<Double> forecastAve(){
@@ -46,11 +63,69 @@ public class Forecasting {
     }
 
     public static class SalesRecord{
+        public final LocalDate date;
+        public final String productId;
+        public final int qty;
+        public final double revenue;
+
+        public SalesRecord(LocalDate date, String productId, int qty, double revenue) {
+            this.date = date;
+            this.productId = productId;
+            this.qty = qty;
+            this.revenue = revenue;
+        }
+
+        public String toString() {
+            return "SalesRecord{" +
+                    "date=" + date +
+                    ", productId='" + productId + '\'' +
+                    ", qty=" + qty +
+                    ", revenue=" + revenue +
+                    '}';
+        }    
     }
 
     public static class DemandRecord{
+        public final LocalDate date;
+        public final String productId;
+        public final int qty;
+
+        public DemandRecord(LocalDate date, String productId, int qty) {
+            this.date = date;
+            this.productId = productId;
+            this.qty = qty;
+        }
+
+        public String toString() {
+            return "DemandRecord{" +
+                    "date=" + date +
+                    ", productId='" + productId + '\'' +
+                    ", qty=" + qty +
+                    '}';
+        }
     }
 
-    public static class TrendResult{
+    public static class TrendResult {
+        public final String productId;
+        public final int totalSalesQty;
+        public final int totalDemandQty;
+        public final double totalRevenue;
+
+        public TrendResult(String productId, int totalSalesQty, int totalDemandQty, double totalRevenue) {
+            this.productId = productId;
+            this.totalSalesQty = totalSalesQty;
+            this.totalDemandQty = totalDemandQty;
+            this.totalRevenue = totalRevenue;
+        }
+
+        public String toString() {
+            return "TrendResult{" +
+                    "productId='" + productId + '\'' +
+                    ", totalSalesQty=" + totalSalesQty +
+                    ", totalDemandQty=" + totalDemandQty +
+                    ", totalRevenue=" + totalRevenue +
+                    '}';
+        }
     }
+
 }
