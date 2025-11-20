@@ -12,17 +12,17 @@ public class InventoryManager {
         String sql = "INSERT INTO inventory (item_code, item_name, unit_of_measure, quantity_on_hand, reorder_level, supplier_id, expiration_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement st = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, i.getItemCode());
-            stmt.setString(2, i.getItemName());
-            stmt.setString(3, i.getUnitOfMeasure());
-            stmt.setDouble(4, i.getQuantityOnHand());
-            stmt.setDouble(5, i.getReorderLevel());
-            stmt.setInt(6, i.getSupplierId());
-            stmt.setDate(7, i.getExpirationDate());
+            st.setString(1, i.getItemCode());
+            st.setString(2, i.getItemName());
+            st.setString(3, i.getUnitOfMeasure());
+            st.setDouble(4, i.getQuantityOnHand());
+            st.setDouble(5, i.getReorderLevel());
+            st.setInt(6, i.getSupplierId());
+            st.setDate(7, i.getExpirationDate());
 
-            stmt.executeUpdate();
+            st.executeUpdate();
 
         } catch (SQLException e) { e.printStackTrace(); }
     }
