@@ -1,4 +1,4 @@
-package manager;
+package managers;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -47,7 +47,7 @@ public class Transactions {
         public final double totalQty;
         public final double totalRevenue;
 
-        public AggSalesRecord(String timePeriod, String productId, double totalQty, double totalRevenue) {
+        public void AggSalesRecord(String timePeriod, String productId, double totalQty, double totalRevenue) {
             this.timePeriod = timePeriod;
             this.productId = productId;
             this.totalQty = totalQty;
