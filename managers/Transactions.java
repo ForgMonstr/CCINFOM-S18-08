@@ -47,7 +47,7 @@ public class Transactions {
         public final double totalQty;
         public final double totalRevenue;
 
-        public AggSalesRecord(String timePeriod, String productId, double totalQty, double totalRevenue) {
+        public AggregatedSalesRecord(String timePeriod, String productId, double totalQty, double totalRevenue) {
             this.timePeriod = timePeriod;
             this.productId = productId;
             this.totalQty = totalQty;
