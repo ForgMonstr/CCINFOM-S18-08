@@ -1,5 +1,4 @@
 package GUI;
-
 import javax.swing.*;
 import java.awt.*;
 public class Main_Menu extends JFrame {
@@ -7,7 +6,7 @@ public class Main_Menu extends JFrame {
         this.setTitle("Infom");
         this.setSize(800, 600);
         this.setDefaultCloseOperation(3);
-        this.setResizable(true);
+        this.setResizable(false);
         ImageIcon icon2 = new ImageIcon("UGANDAN.jpg");
         this.setIconImage(icon2.getImage());
 
@@ -27,6 +26,8 @@ public class Main_Menu extends JFrame {
 
 
         this.add(header);
+
+
         JPanel ingredients = new JPanel();
         JButton showIng = new JButton("Show Ingredients");
         showIng.setFont(new Font("Arial", 1, 12));
@@ -39,6 +40,10 @@ public class Main_Menu extends JFrame {
         ingredients.setBounds(0, 60, 800, 80);
         ingredients.setBackground(Color.LIGHT_GRAY);
 
+        showIng.addActionListener(e -> {
+            Ingredients_Page ingP = new Ingredients_Page();
+            ingP.setVisible(true);
+        });
 
         JPanel ingWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ingWrapper.setOpaque(false);
@@ -59,6 +64,10 @@ public class Main_Menu extends JFrame {
         items.setBounds(0, 140, 800, 80);
         items.setBackground(new Color(38, 38, 38));
 
+        showItems.addActionListener(e -> {
+            Items_Page itemP = new Items_Page();
+            itemP.setVisible(true);
+        });
 
         JPanel itemsWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         itemsWrapper.setOpaque(false);
@@ -78,11 +87,17 @@ public class Main_Menu extends JFrame {
         history.setBounds(0, 220, 800, 80);
         history.setBackground(Color.LIGHT_GRAY);
 
+        showHistory.addActionListener(e -> {
+            History_Page hp = new History_Page();
+            hp.setVisible(true);
+        });
+
         JPanel histWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         histWrapper.setOpaque(false);
         histWrapper.add(showHistory);
         history.add(histWrapper, BorderLayout.CENTER);
         this.add(history);
+
 
         JPanel branch = new JPanel();
         JButton showBranch = new JButton("Show Branch");
@@ -95,6 +110,11 @@ public class Main_Menu extends JFrame {
         branch.setLayout(new BorderLayout());
         branch.setBackground(new Color(38, 38, 38));
         branch.setBounds(0, 300, 800, 80);
+
+        showBranch.addActionListener(e -> {
+            Branch_Page bp = new Branch_Page();
+            bp.setVisible(true);
+        });
 
         JPanel branchWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         branchWrapper.setOpaque(false);
@@ -126,7 +146,6 @@ public class Main_Menu extends JFrame {
         recordsWrapper.add(showRecords);
         records.add(recordsWrapper, BorderLayout.CENTER);
         this.add(records);
-
 
         JPanel transactions = new JPanel();
         JButton showTransactions = new JButton("Show Transactions");

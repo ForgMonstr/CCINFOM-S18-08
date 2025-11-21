@@ -9,12 +9,23 @@ public class Records_Page extends JFrame {
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(true);
+        this.setLayout(new BorderLayout());
 
-        JLabel recordTitle = new JLabel("Records");
-        recordTitle.setFont(new Font("Arial", Font.BOLD,20));
-        recordTitle.setForeground(Color.white);
+        JPanel recordsHeader = new JPanel();
+        recordsHeader.setBackground(Color.black);
+        recordsHeader.setBounds(0, 0, 800, 600);
 
-        this.add(recordTitle);
+        JLabel recordsHL = new JLabel("Records");
+        recordsHL.setFont(new Font("Arial", Font.BOLD,30));
+        recordsHL.setForeground(Color.white);
+        recordsHeader.add(recordsHL);
+
+        this.add(recordsHeader,  BorderLayout.NORTH);
+
+        JPanel recordsPanel = new JPanel();
+        recordsPanel.setBackground(new Color(200,200,200));
+        recordsPanel.setLayout(null);
+        this.add(recordsPanel, BorderLayout.CENTER);
     }
 }
