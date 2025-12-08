@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="61a19439-b42e-44bf-8364-0cd6d0db31a1" name="Changes" comment="Moved frame to gui" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/DBconnecting" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ForgMonstr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ForgMonstr/CCINFOM-S18-08.git&quot;,
+    &quot;accountId&quot;: &quot;7f19b17e-4165-4b42-8149-5b808c026fc7&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="35BbPdXKHiqdUEhdWZwTlcZy07Z" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main_GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/DBconnecting&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Leo/IdeaProjects/CCINFOM-S18-08/connectiondb/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Leo\IdeaProjects\CCINFOM-S18-08\connectiondb" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main_GUI">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="CCINFOM-S18-08" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main_GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Main_GUI" />
+      <module name="CCINFOM-S18-08" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main_GUI" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main_GUI" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main_GUI" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="61a19439-b42e-44bf-8364-0cd6d0db31a1" name="Changes" comment="" />
+      <created>1762586389235</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762586389235</updated>
+    </task>
+    <task id="LOCAL-00001" summary="sex">
+      <option name="closed" value="true" />
+      <created>1762586599381</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762586599381</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Organization">
+      <option name="closed" value="true" />
+      <created>1762786210602</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1762786210602</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Organization">
+      <option name="closed" value="true" />
+      <created>1762786554647</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762786554647</updated>
+    </task>
+    <task id="LOCAL-00004" summary="comment">
+      <option name="closed" value="true" />
+      <created>1762864407072</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762864407072</updated>
+    </task>
+    <task id="LOCAL-00005" summary="comment cock sex">
+      <option name="closed" value="true" />
+      <created>1762864658156</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762864658156</updated>
+    </task>
+    <task id="LOCAL-00006" summary="commented cock">
+      <option name="closed" value="true" />
+      <created>1762864798979</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762864798979</updated>
+    </task>
+    <task id="LOCAL-00007" summary="commented cock">
+      <option name="closed" value="true" />
+      <created>1762864857516</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762864857516</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added dbconnector.java">
+      <option name="closed" value="true" />
+      <created>1762867415149</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762867415149</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added Driver">
+      <option name="closed" value="true" />
+      <created>1762869574012</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762869574012</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Finished DBConnector">
+      <option name="closed" value="true" />
+      <created>1763325031663</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1763325031663</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Refactored Classes to Models">
+      <option name="closed" value="true" />
+      <created>1763325233457</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1763325233457</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added more organization">
+      <option name="closed" value="true" />
+      <created>1763325531396</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763325531396</updated>
+    </task>
+    <task id="LOCAL-00013" summary="coded Order">
+      <option name="closed" value="true" />
+      <created>1763326483236</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763326483236</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Coded Supplier.java">
+      <option name="closed" value="true" />
+      <created>1763326499136</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763326499136</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Coded Supplies.java">
+      <option name="closed" value="true" />
+      <created>1763326586780</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763326586780</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Coded Product">
+      <option name="closed" value="true" />
+      <created>1763326669676</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763326669676</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Changed Supplies">
+      <option name="closed" value="true" />
+      <created>1763491168644</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1763491168645</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added Branch.java">
+      <option name="closed" value="true" />
+      <created>1763551145141</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763551145141</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added Two more entities">
+      <option name="closed" value="true" />
+      <created>1763551309473</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763551309473</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added more entities&#10;removed Order entity">
+      <option name="closed" value="true" />
+      <created>1763551379612</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763551379612</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Model Codes">
+      <option name="closed" value="true" />
+      <created>1763551698273</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763551698273</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added Managers and DAOS">
+      <option name="closed" value="true" />
+      <created>1763553379318</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1763553379318</updated>
+    </task>
+    <task id="LOCAL-00023" summary="DAOS">
+      <option name="closed" value="true" />
+      <created>1763556756713</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1763556756713</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Added CustomerOrderDAO.java">
+      <option name="closed" value="true" />
+      <created>1763556857928</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1763556857928</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added DAOs and Changed DBConnector to be have non parameters">
+      <option name="closed" value="true" />
+      <created>1763557187883</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1763557187883</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Moved code of Forecastingdao to Forecasting">
+      <option name="closed" value="true" />
+      <created>1763633149029</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1763633149030</updated>
+    </task>
+    <task id="LOCAL-00027" summary="New Forecasting">
+      <option name="closed" value="true" />
+      <created>1763636861522</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1763636861522</updated>
+    </task>
+    <task id="LOCAL-00028" summary="DBConnector.getConnection exceptions shit">
+      <option name="closed" value="true" />
+      <created>1763636966299</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1763636966299</updated>
+    </task>
+    <task id="LOCAL-00029" summary="fix">
+      <option name="closed" value="true" />
+      <created>1763636997560</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1763636997560</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Added Seeder">
+      <option name="closed" value="true" />
+      <created>1763637612400</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1763637612400</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Testing forecastManager">
+      <option name="closed" value="true" />
+      <created>1763637939521</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1763637939521</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Added schema.sql">
+      <option name="closed" value="true" />
+      <created>1763638166678</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1763638166678</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Changed InventoryManagerDAO.java class name and Added exceptions for DBconnector in same file">
+      <option name="closed" value="true" />
+      <created>1763644154694</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1763644154694</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Added exceptions for DBconnector in same file">
+      <option name="closed" value="true" />
+      <created>1763644438442</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1763644438442</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Fixed Errors in Forecasting.java">
+      <option name="closed" value="true" />
+      <created>1763644916279</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1763644916279</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Stuff">
+      <option name="closed" value="true" />
+      <created>1763644950383</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1763644950383</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Stuff">
+      <option name="closed" value="true" />
+      <created>1763648448768</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1763648448768</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Added util libraries">
+      <option name="closed" value="true" />
+      <created>1763648973330</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1763648973330</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763649025057</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1763649025057</updated>
+    </task>
+    <task id="LOCAL-00040" summary="removed forecast accuracy">
+      <option name="closed" value="true" />
+      <created>1763650101858</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1763650101858</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763650196265</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1763650196265</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Added // Ingredient Demand Projection&#10;     // Seasonality &amp; Trend Analysis Report&#10;    // Profitability Forecast Report">
+      <option name="closed" value="true" />
+      <created>1763651469509</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1763651469509</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763651648945</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1763651648945</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763651719555</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1763651719555</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763653041534</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1763653041534</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1763654366577</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1763654366577</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Moved frame to gui">
+      <option name="closed" value="true" />
+      <created>1763655279441</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1763655279441</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="develop" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="feature/models" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changed Supplies" />
+    <MESSAGE value="Added Branch.java" />
+    <MESSAGE value="Added Two more entities" />
+    <MESSAGE value="Added more entities&#10;removed Order entity" />
+    <MESSAGE value="Model Codes" />
+    <MESSAGE value="Added Managers and DAOS" />
+    <MESSAGE value="DAOS" />
+    <MESSAGE value="Added CustomerOrderDAO.java" />
+    <MESSAGE value="Added DAOs and Changed DBConnector to be have non parameters" />
+    <MESSAGE value="Moved code of Forecastingdao to Forecasting" />
+    <MESSAGE value="New Forecasting" />
+    <MESSAGE value="DBConnector.getConnection exceptions shit" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="Added Seeder" />
+    <MESSAGE value="Testing forecastManager" />
+    <MESSAGE value="Added schema.sql" />
+    <MESSAGE value="Changed InventoryManagerDAO.java class name and Added exceptions for DBconnector in same file" />
+    <MESSAGE value="Added exceptions for DBconnector in same file" />
+    <MESSAGE value="Fixed Errors in Forecasting.java" />
+    <MESSAGE value="Stuff" />
+    <MESSAGE value="Added util libraries" />
+    <MESSAGE value="removed forecast accuracy" />
+    <MESSAGE value="Added // Ingredient Demand Projection&#10;     // Seasonality &amp; Trend Analysis Report&#10;    // Profitability Forecast Report" />
+    <MESSAGE value="Fixed bugs" />
+    <MESSAGE value="Moved frame to gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved frame to gui" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/DBConnection/src/Main.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
